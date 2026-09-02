@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>مسار — ولي الأمر</title>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<h2>متابعة الطالب</h2>
+
+<div class="card">
+  <p>الحالة الحالية: <span id="statusBadge" class="status-badge">--</span></p>
+</div>
+
+<div id="map"></div>
+
+<div class="card">
+  <h2>سجل الحضور والانصراف</h2>
+  <div id="attendanceLog"></div>
+</div>
+
+<button class="secondary" onclick="auth.signOut().then(()=>location.href='index.html')">تسجيل خروج</button>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore-compat.js"></script>
+<script src="firebase-config.js"></script>
+<script src="parent.js"></script>
+</body>
+</html>
