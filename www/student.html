@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>مسار — الطالب</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<h2>رحلتي اليوم</h2>
+<div class="card">
+  <p>الحالة: <span id="statusBadge" class="status-badge status-tracking">في انتظار بدء الرحلة</span></p>
+</div>
+
+<button class="sos-btn" onclick="triggerSOS()">استغاثة</button>
+
+<div class="card">
+  <h2>تواصل مع المدرسة</h2>
+  <div id="chatLog" style="max-height:200px;overflow-y:auto;margin-bottom:10px"></div>
+  <input type="text" id="chatInput" placeholder="اكتب رسالتك...">
+  <button onclick="sendMessage()">إرسال</button>
+</div>
+
+<button class="secondary" onclick="auth.signOut().then(()=>location.href='index.html')">تسجيل خروج</button>
+
+<script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore-compat.js"></script>
+<script src="firebase-config.js"></script>
+<script src="student.js"></script>
+</body>
+</html>
