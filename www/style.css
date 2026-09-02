@@ -1,0 +1,75 @@
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Segoe UI', Tahoma, Arial, sans-serif;
+  direction: rtl;
+  background: #f4f6f8;
+  color: #222;
+  padding: 16px;
+}
+
+h1, h2 { margin-bottom: 12px; }
+
+.card {
+  background: #fff;
+  border-radius: 10px;
+  padding: 16px;
+  margin-bottom: 16px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+}
+
+input, select, button {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 10px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-size: 15px;
+}
+
+button {
+  background: #2563eb;
+  color: #fff;
+  border: none;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+button.danger { background: #dc2626; }
+button.secondary { background: #6b7280; }
+
+#map { height: 350px; border-radius: 10px; margin-bottom: 16px; }
+
+.status-badge {
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: bold;
+}
+.status-ontime { background: #d1fae5; color: #065f46; }
+.status-late   { background: #fef3c7; color: #92400e; }
+.status-absent { background: #fee2e2; color: #991b1b; }
+.status-tracking { background: #dbeafe; color: #1e40af; }
+
+.sos-btn {
+  background: #dc2626;
+  color: #fff;
+  font-size: 20px;
+  padding: 24px;
+  border-radius: 50%;
+  width: 120px;
+  height: 120px;
+  margin: 24px auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+}
+
+.log-item {
+  padding: 10px;
+  border-bottom: 1px solid #eee;
+  display: flex;
+  justify-content: space-between;
+}
