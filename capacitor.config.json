@@ -1,0 +1,9 @@
+{
+  "appId": "com.masar.app",
+  "appName": "مسار",
+  "webDir": "www",
+  "bundledWebRuntime": false,
+  "android": {
+    "allowMixedContent": true
+  }
+}
