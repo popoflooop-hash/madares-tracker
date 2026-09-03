@@ -7,6 +7,11 @@ const firebaseConfig = {
   appId: "1:842457078793:web:7b2045d827feabf1fe6cd8"
 };
 
-firebase.initializeApp(firebaseConfig);
-const db = firebase.firestore();
-const auth = firebase.auth();
+try {
+  firebase.initializeApp(firebaseConfig);
+  window.db = firebase.firestore();
+  window.auth = firebase.auth();
+  alert('Firebase اتحمل بنجاح');
+} catch (e) {
+  alert('فشل تحميل Firebase: ' + e.message);
+}
