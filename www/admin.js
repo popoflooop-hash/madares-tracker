@@ -28,7 +28,6 @@ async function createSchoolAdmin() {
   }
 
   try {
-    // ملاحظة: إنشاء المستخدم هنا هيسجّل دخول تلقائي بيه بدل حسابك — هنرجعك لحسابك فوراً بعدين
     const cred = await auth.createUserWithEmailAndPassword(email, password);
 
     await db.collection('users').doc(cred.user.uid).set({
@@ -40,7 +39,6 @@ async function createSchoolAdmin() {
     statusEl.style.color = 'green';
     statusEl.textContent = 'تم إنشاء حساب المدرسة بنجاح: ' + email;
 
-    // نرجع نسجل خروج فوراً عشان النظام رجع يعتبرنا مسجلين بحساب المدرسة الجديد بالغلط
     setTimeout(async () => {
       await auth.signOut();
       alert('تم إنشاء الحساب. سجّل دخولك مرة أخرى بحسابك (السوبر أدمن) لإضافة حساب مدرسة آخر إذا أردت.');
