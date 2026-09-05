@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>مسار — إنشاء حساب</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<h1>إنشاء حساب جديد</h1>
+
+<div class="card">
+  <label style="display:block;margin-bottom:6px;font-weight:bold">نوع الحساب</label>
+  <select id="role">
+    <option value="parent">ولي أمر</option>
+    <option value="student">طالب</option>
+  </select>
+
+  <input type="email" id="email" placeholder="البريد الإلكتروني">
+  <input type="password" id="password" placeholder="كلمة المرور (6 أحرف على الأقل)">
+  <input type="password" id="confirmPassword" placeholder="تأكيد كلمة المرور">
+
+  <button onclick="register()">إنشاء الحساب</button>
+  <p id="error" style="color:red;margin-top:8px"></p>
+  <p id="success" style="color:green;margin-top:8px"></p>
+</div>
+
+<button class="secondary" onclick="window.location.href='index.html'">لديك حساب بالفعل؟ سجل الدخول</button>
+
+<script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore-compat.js"></script>
+<script src="firebase-config.js"></script>
+<script src="register.js"></script>
+</body>
+</html>
