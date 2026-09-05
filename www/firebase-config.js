@@ -1,3 +1,5 @@
+alert('بدء تحميل firebase-config.js');
+
 const firebaseConfig = {
   apiKey: "AIzaSyBNVNqvhQs7i2PZfk2WEW0ON4PdoErk1i4",
   authDomain: "my-school-57688.firebaseapp.com",
@@ -10,3 +12,5 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore();
 const auth = firebase.auth();
+
+alert('تم تعريف auth بنجاح: ' + typeof auth);
