@@ -27,8 +27,12 @@ async function createSchoolAdmin() {
     return;
   }
 
+  // ننشئ تطبيق Firebase ثانوي منفصل تماماً عشان ما يأثرش على جلسة الأدمن الحالية
+  const secondaryApp = firebase.initializeApp(firebase.app().options, 'Secondary');
+  const secondaryAuth = secondaryApp.auth();
+
   try {
-    const cred = await auth.createUserWithEmailAndPassword(email, password);
+    const cred = await secondaryAuth.createUserWithEmailAndPassword(email, password);
 
     await db.collection('users').doc(cred.user.uid).set({
       role: 'school_admin',
@@ -36,14 +40,12 @@ async function createSchoolAdmin() {
       createdAt: firebase.firestore.FieldValue.serverTimestamp()
     });
 
+    // نسجل خروج من الجلسة الثانوية فقط، وجلسة الأدمن الأساسية تفضل زي ما هي
+    await secondaryAuth.signOut();
+    await secondaryApp.delete();
+
     statusEl.style.color = 'green';
     statusEl.textContent = 'تم إنشاء حساب المدرسة بنجاح: ' + email;
-
-    setTimeout(async () => {
-      await auth.signOut();
-      alert('تم إنشاء الحساب. سجّل دخولك مرة أخرى بحسابك (السوبر أدمن) لإضافة حساب مدرسة آخر إذا أردت.');
-      window.location.href = 'index.html';
-    }, 2000);
 
   } catch (e) {
     if (e.code === 'auth/email-already-in-use') {
@@ -53,5 +55,6 @@ async function createSchoolAdmin() {
       statusEl.style.color = 'red';
       statusEl.textContent = 'خطأ: ' + e.message;
     }
+    await secondaryApp.delete();
   }
 }
