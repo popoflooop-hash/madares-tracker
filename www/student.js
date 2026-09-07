@@ -16,6 +16,14 @@ auth.onAuthStateChanged(async (user) => {
   if (schoolDoc.exists) {
     initTeacherRating(studentData, schoolDoc.data());
   }
+
+  const now = new Date();
+  const monthKey = `${now.getFullYear()}-${now.getMonth() + 1}`;
+  const somDoc = await db.collection('studentOfMonth').doc(monthKey).get();
+  if (somDoc.exists && somDoc.data().studentId === studentId) {
+    document.getElementById('studentOfMonthBadge').innerHTML =
+      '<div class="card" style="text-align:center;background:#fef3c7"><h2>🏆 مبروك! أنت الطالب المثالي لهذا الشهر</h2></div>';
+  }
 });
 
 function checkTrackingWindow() {
