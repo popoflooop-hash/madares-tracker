@@ -50,6 +50,17 @@
   <p id="status" style="margin-top:8px"></p>
 </div>
 
+<div class="card">
+  <h2>إعلان جديد لأولياء الأمور</h2>
+  <input type="text" id="announcementTitle" placeholder="عنوان الإعلان">
+  <textarea id="announcementMessage" placeholder="نص الإعلان" style="width:100%;padding:12px;border-radius:8px;border:1px solid #ccc;margin-bottom:10px;min-height:80px"></textarea>
+  <button onclick="postAnnouncement()">نشر الإعلان</button>
+  <p id="annStatus" style="margin-top:8px"></p>
+
+  <h2 style="margin-top:20px">الإعلانات المنشورة</h2>
+  <div id="announcementsList"></div>
+</div>
+
 <button class="secondary" onclick="auth.signOut().then(()=>location.href='index.html')">تسجيل خروج</button>
 
 <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-app-compat.js"></script>
