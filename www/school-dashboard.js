@@ -1,4 +1,10 @@
 let currentHolidays = [];
+const GRADE_NAMES = {
+  'primary1': 'أولى ابتدائي', 'primary2': 'ثانية ابتدائي', 'primary3': 'ثالثة ابتدائي',
+  'primary4': 'رابعة ابتدائي', 'primary5': 'خامسة ابتدائي', 'primary6': 'سادسة ابتدائي',
+  'prep1': 'أولى إعدادي', 'prep2': 'ثانية إعدادي', 'prep3': 'ثالثة إعدادي',
+  'secondary1': 'أولى ثانوي', 'secondary2': 'ثانية ثانوي', 'secondary3': 'ثالثة ثانوي'
+};
 
 auth.onAuthStateChanged(async (user) => {
   if (!user) { window.location.href = 'index.html'; return; }
@@ -15,6 +21,7 @@ auth.onAuthStateChanged(async (user) => {
 
   loadSchoolSettings();
   loadAnnouncements();
+  loadTeachers();
 });
 
 async function loadSchoolSettings() {
@@ -136,6 +143,50 @@ function loadAnnouncements() {
         div.style.padding = '10px 0';
         div.style.borderBottom = '1px solid #eee';
         div.innerHTML = `<strong>${ann.title}</strong><p>${ann.message}</p>`;
+        list.appendChild(div);
+      });
+    });
+}
+
+async function addTeacher() {
+  const grade = document.getElementById('teacherGrade').value;
+  const subject = document.getElementById('subjectName').value.trim();
+  const teacherName = document.getElementById('teacherName').value.trim();
+  const statusEl = document.getElementById('teacherStatus');
+
+  if (!subject || !teacherName) {
+    statusEl.style.color = 'red';
+    statusEl.textContent = 'من فضلك اكتب اسم المادة واسم المدرس';
+    return;
+  }
+
+  try {
+    await db.collection('teachers').add({
+      grade: grade,
+      subject: subject,
+      teacherName: teacherName,
+      createdAt: firebase.firestore.FieldValue.serverTimestamp()
+    });
+    document.getElementById('subjectName').value = '';
+    document.getElementById('teacherName').value = '';
+    statusEl.style.color = 'green';
+    statusEl.textContent = 'تمت الإضافة بنجاح';
+  } catch (e) {
+    statusEl.style.color = 'red';
+    statusEl.textContent = 'خطأ: ' + e.message;
+  }
+}
+
+function loadTeachers() {
+  db.collection('teachers').orderBy('createdAt', 'desc')
+    .onSnapshot(snapshot => {
+      const list = document.getElementById('teachersList');
+      list.innerHTML = '';
+      snapshot.forEach(doc => {
+        const t = doc.data();
+        const div = document.createElement('div');
+        div.className = 'log-item';
+        div.innerHTML = `<span>${GRADE_NAMES[t.grade] || t.grade} — ${t.subject}</span><span>${t.teacherName}</span>`;
         list.appendChild(div);
       });
     });
