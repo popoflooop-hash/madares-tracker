@@ -17,22 +17,30 @@ auth.onAuthStateChanged(async (user) => {
 
   studentId = linkedStudents[0];
 
-  loadStudentGradeInfo();
+  await loadStudentGradeInfo();
   initMap();
   listenToTracking();
   listenToAttendance();
   listenToAnnouncements();
 });
 
+let studentDataGlobal;
+
 async function loadStudentGradeInfo() {
   const doc = await db.collection('students').doc(studentId).get();
   if (!doc.exists) return;
   const data = doc.data();
+  studentDataGlobal = data;
   const gradeText = GRADE_NAMES[data.grade] || '';
   const classText = CLASS_NAMES[data.classNumber] || '';
   const infoEl = document.getElementById('studentGradeInfo');
   if (gradeText && classText) {
     infoEl.textContent = `${data.name || 'الطالب'} — ${gradeText} ${classText}`;
+  }
+
+  const schoolDoc = await db.collection('school').doc('main').get();
+  if (schoolDoc.exists) {
+    initTeacherRating(data, schoolDoc.data());
   }
 }
 
