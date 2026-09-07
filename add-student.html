@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>مسار — إضافة طالب</title>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<h1>إضافة / تعديل بيانات الطالب</h1>
+
+<div class="card">
+  <label style="display:block;margin-bottom:6px;font-weight:bold">البريد الإلكتروني لحساب الطالب</label>
+  <input type="email" id="studentEmail" placeholder="حساب الطالب المسجل مسبقاً">
+
+  <label style="display:block;margin-bottom:6px;font-weight:bold">اسم الطالب</label>
+  <input type="text" id="studentName" placeholder="اسم الطالب">
+
+  <label style="display:block;margin-bottom:6px;font-weight:bold">المرحلة الدراسية</label>
+  <select id="grade">
+    <option value="primary1">أولى ابتدائي</option>
+    <option value="primary2">ثانية ابتدائي</option>
+    <option value="primary3">ثالثة ابتدائي</option>
+    <option value="primary4">رابعة ابتدائي</option>
+    <option value="primary5">خامسة ابتدائي</option>
+    <option value="primary6">سادسة ابتدائي</option>
+    <option value="prep1">أولى إعدادي</option>
+    <option value="prep2">ثانية إعدادي</option>
+    <option value="prep3">ثالثة إعدادي</option>
+    <option value="secondary1">أولى ثانوي</option>
+    <option value="secondary2">ثانية ثانوي</option>
+    <option value="secondary3">ثالثة ثانوي</option>
+  </select>
+
+  <label style="display:block;margin-bottom:6px;font-weight:bold">الفصل</label>
+  <select id="classNumber">
+    <option value="1">الأول</option>
+    <option value="2">الثاني</option>
+    <option value="3">الثالث</option>
+    <option value="4">الرابع</option>
+    <option value="5">الخامس</option>
+  </select>
+</div>
+
+<div class="card">
+  <p style="margin-bottom:10px">اضغط على الخريطة لتحديد موقع منزل الطالب</p>
+  <div id="map"></div>
+  <button onclick="suggestRoute()">اقتراح المسار للمدرسة</button>
+  <p style="font-size:13px;color:#666;margin-top:8px">يمكنك الضغط على الخريطة بعد الاقتراح لإضافة نقاط تعديل يدوية على المسار</p>
+</div>
+
+<div class="card">
+  <label style="display:block;margin-bottom:6px;font-weight:bold">موعد نزول الطالب من المنزل</label>
+  <input type="time" id="departureTime">
+
+  <label style="display:block;margin-bottom:6px;font-weight:bold">موعد العودة — الحد الأدنى</label>
+  <input type="time" id="returnTimeMin">
+
+  <label style="display:block;margin-bottom:6px;font-weight:bold">موعد العودة — الحد الأقصى</label>
+  <input type="time" id="returnTimeMax">
+
+  <button onclick="saveStudent()">حفظ بيانات الطالب</button>
+  <p id="status" style="margin-top:8px"></p>
+</div>
+
+<button class="secondary" onclick="window.location.href='parent.html'">رجوع</button>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore-compat.js"></script>
+<script src="firebase-config.js"></script>
+<script src="add-student.js"></script>
+</body>
+</html>
