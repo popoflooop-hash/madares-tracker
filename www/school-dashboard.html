@@ -90,12 +90,20 @@
   <div id="teachersList" style="margin-top:14px"></div>
 </div>
 
+<div class="card">
+  <h2>الطالب المثالي للشهر</h2>
+  <button onclick="runStudentOfMonth()">احتساب الطالب المثالي لهذا الشهر</button>
+  <p id="somStatus" style="margin-top:8px"></p>
+  <div id="somResult" style="margin-top:10px;font-weight:bold"></div>
+</div>
+
 <button class="secondary" onclick="auth.signOut().then(()=>location.href='index.html')">تسجيل خروج</button>
 
 <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore-compat.js"></script>
 <script src="firebase-config.js"></script>
+<script src="student-of-month.js"></script>
 <script src="school-dashboard.js"></script>
 </body>
 </html>
