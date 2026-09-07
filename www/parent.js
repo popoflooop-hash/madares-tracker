@@ -1,5 +1,13 @@
 let map, marker, studentId;
 
+const GRADE_NAMES = {
+  'primary1': 'أولى ابتدائي', 'primary2': 'ثانية ابتدائي', 'primary3': 'ثالثة ابتدائي',
+  'primary4': 'رابعة ابتدائي', 'primary5': 'خامسة ابتدائي', 'primary6': 'سادسة ابتدائي',
+  'prep1': 'أولى إعدادي', 'prep2': 'ثانية إعدادي', 'prep3': 'ثالثة إعدادي',
+  'secondary1': 'أولى ثانوي', 'secondary2': 'ثانية ثانوي', 'secondary3': 'ثالثة ثانوي'
+};
+const CLASS_NAMES = { '1': 'الأول', '2': 'الثاني', '3': 'الثالث', '4': 'الرابع', '5': 'الخامس' };
+
 auth.onAuthStateChanged(async (user) => {
   if (!user) { window.location.href = 'index.html'; return; }
 
@@ -9,11 +17,24 @@ auth.onAuthStateChanged(async (user) => {
 
   studentId = linkedStudents[0];
 
+  loadStudentGradeInfo();
   initMap();
   listenToTracking();
   listenToAttendance();
   listenToAnnouncements();
 });
+
+async function loadStudentGradeInfo() {
+  const doc = await db.collection('students').doc(studentId).get();
+  if (!doc.exists) return;
+  const data = doc.data();
+  const gradeText = GRADE_NAMES[data.grade] || '';
+  const classText = CLASS_NAMES[data.classNumber] || '';
+  const infoEl = document.getElementById('studentGradeInfo');
+  if (gradeText && classText) {
+    infoEl.textContent = `${data.name || 'الطالب'} — ${gradeText} ${classText}`;
+  }
+}
 
 function initMap() {
   map = L.map('map').setView([30.0444, 31.2357], 14);
