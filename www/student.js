@@ -11,6 +11,11 @@ auth.onAuthStateChanged(async (user) => {
   checkTrackingWindow();
   setInterval(checkTrackingWindow, 60000);
   loadChat();
+
+  const schoolDoc = await db.collection('school').doc('main').get();
+  if (schoolDoc.exists) {
+    initTeacherRating(studentData, schoolDoc.data());
+  }
 });
 
 function checkTrackingWindow() {
