@@ -61,6 +61,33 @@
   <div id="announcementsList"></div>
 </div>
 
+<div class="card">
+  <h2>إدارة المواد والمدرسين</h2>
+
+  <label style="display:block;margin-bottom:6px;font-weight:bold">المرحلة الدراسية</label>
+  <select id="teacherGrade">
+    <option value="primary1">أولى ابتدائي</option>
+    <option value="primary2">ثانية ابتدائي</option>
+    <option value="primary3">ثالثة ابتدائي</option>
+    <option value="primary4">رابعة ابتدائي</option>
+    <option value="primary5">خامسة ابتدائي</option>
+    <option value="primary6">سادسة ابتدائي</option>
+    <option value="prep1">أولى إعدادي</option>
+    <option value="prep2">ثانية إعدادي</option>
+    <option value="prep3">ثالثة إعدادي</option>
+    <option value="secondary1">أولى ثانوي</option>
+    <option value="secondary2">ثانية ثانوي</option>
+    <option value="secondary3">ثالثة ثانوي</option>
+  </select>
+
+  <input type="text" id="subjectName" placeholder="اسم المادة (مثال: رياضيات)">
+  <input type="text" id="teacherName" placeholder="اسم المدرس">
+  <button onclick="addTeacher()">إضافة</button>
+  <p id="teacherStatus" style="margin-top:8px"></p>
+
+  <div id="teachersList" style="margin-top:14px"></div>
+</div>
+
 <button class="secondary" onclick="auth.signOut().then(()=>location.href='index.html')">تسجيل خروج</button>
 
 <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-app-compat.js"></script>
