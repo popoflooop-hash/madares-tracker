@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>مسار — المدرس</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<h1>تقييم الطلاب الأسبوعي</h1>
+<p id="teacherInfo" style="color:#666;margin-bottom:16px"></p>
+
+<div class="card">
+  <label style="display:block;margin-bottom:6px;font-weight:bold">الفصل</label>
+  <select id="classFilter">
+    <option value="1">الأول</option>
+    <option value="2">الثاني</option>
+    <option value="3">الثالث</option>
+    <option value="4">الرابع</option>
+    <option value="5">الخامس</option>
+  </select>
+  <button onclick="loadStudents()">عرض طلاب الفصل</button>
+</div>
+
+<div id="studentsList"></div>
+
+<button class="secondary" onclick="auth.signOut().then(()=>location.href='index.html')">تسجيل خروج</button>
+
+<script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore-compat.js"></script>
+<script src="firebase-config.js"></script>
+<script src="teacher.js"></script>
+</body>
+</html>
