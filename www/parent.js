@@ -12,6 +12,7 @@ auth.onAuthStateChanged(async (user) => {
   initMap();
   listenToTracking();
   listenToAttendance();
+  listenToAnnouncements();
 });
 
 function initMap() {
@@ -58,6 +59,22 @@ function listenToAttendance() {
           : rec.status === 'late' ? 'status-late' : 'status-absent';
         div.innerHTML = `<span>${date}</span><span class="status-badge ${statusClass}">${statusText}</span>`;
         log.appendChild(div);
+      });
+    });
+}
+
+function listenToAnnouncements() {
+  db.collection('announcements').orderBy('postedAt', 'desc').limit(10)
+    .onSnapshot(snapshot => {
+      const list = document.getElementById('announcementsLog');
+      list.innerHTML = '';
+      snapshot.forEach(doc => {
+        const ann = doc.data();
+        const div = document.createElement('div');
+        div.style.padding = '10px 0';
+        div.style.borderBottom = '1px solid #eee';
+        div.innerHTML = `<strong>${ann.title}</strong><p>${ann.message}</p>`;
+        list.appendChild(div);
       });
     });
 }
