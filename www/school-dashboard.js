@@ -14,6 +14,7 @@ auth.onAuthStateChanged(async (user) => {
   }
 
   loadSchoolSettings();
+  loadAnnouncements();
 });
 
 async function loadSchoolSettings() {
@@ -95,4 +96,47 @@ async function saveSchoolSettings() {
     statusEl.style.color = 'red';
     statusEl.textContent = 'خطأ: ' + e.message;
   }
+}
+
+async function postAnnouncement() {
+  const title = document.getElementById('announcementTitle').value.trim();
+  const message = document.getElementById('announcementMessage').value.trim();
+  const annStatusEl = document.getElementById('annStatus');
+
+  if (!title || !message) {
+    annStatusEl.style.color = 'red';
+    annStatusEl.textContent = 'من فضلك اكتب العنوان والرسالة';
+    return;
+  }
+
+  try {
+    await db.collection('announcements').add({
+      title: title,
+      message: message,
+      postedAt: firebase.firestore.FieldValue.serverTimestamp()
+    });
+    document.getElementById('announcementTitle').value = '';
+    document.getElementById('announcementMessage').value = '';
+    annStatusEl.style.color = 'green';
+    annStatusEl.textContent = 'تم نشر الإعلان بنجاح';
+  } catch (e) {
+    annStatusEl.style.color = 'red';
+    annStatusEl.textContent = 'خطأ: ' + e.message;
+  }
+}
+
+function loadAnnouncements() {
+  db.collection('announcements').orderBy('postedAt', 'desc').limit(10)
+    .onSnapshot(snapshot => {
+      const list = document.getElementById('announcementsList');
+      list.innerHTML = '';
+      snapshot.forEach(doc => {
+        const ann = doc.data();
+        const div = document.createElement('div');
+        div.style.padding = '10px 0';
+        div.style.borderBottom = '1px solid #eee';
+        div.innerHTML = `<strong>${ann.title}</strong><p>${ann.message}</p>`;
+        list.appendChild(div);
+      });
+    });
 }
