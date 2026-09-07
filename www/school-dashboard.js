@@ -152,28 +152,54 @@ async function addTeacher() {
   const grade = document.getElementById('teacherGrade').value;
   const subject = document.getElementById('subjectName').value.trim();
   const teacherName = document.getElementById('teacherName').value.trim();
+  const email = document.getElementById('teacherEmail').value.trim();
+  const password = document.getElementById('teacherPassword').value;
   const statusEl = document.getElementById('teacherStatus');
 
-  if (!subject || !teacherName) {
+  if (!subject || !teacherName || !email || !password) {
     statusEl.style.color = 'red';
-    statusEl.textContent = 'من فضلك اكتب اسم المادة واسم المدرس';
+    statusEl.textContent = 'من فضلك املأ كل الحقول';
+    return;
+  }
+  if (password.length < 6) {
+    statusEl.style.color = 'red';
+    statusEl.textContent = 'كلمة المرور لازم تكون 6 أحرف على الأقل';
     return;
   }
 
+  const secondaryApp = firebase.initializeApp(firebase.app().options, 'Secondary');
+  const secondaryAuth = secondaryApp.auth();
+
   try {
-    await db.collection('teachers').add({
+    const cred = await secondaryAuth.createUserWithEmailAndPassword(email, password);
+
+    await db.collection('users').doc(cred.user.uid).set({
+      role: 'teacher',
+      email: email,
+      createdAt: firebase.firestore.FieldValue.serverTimestamp()
+    });
+
+    await db.collection('teachers').doc(cred.user.uid).set({
       grade: grade,
       subject: subject,
       teacherName: teacherName,
+      email: email,
       createdAt: firebase.firestore.FieldValue.serverTimestamp()
     });
+
+    await secondaryAuth.signOut();
+    await secondaryApp.delete();
+
     document.getElementById('subjectName').value = '';
     document.getElementById('teacherName').value = '';
+    document.getElementById('teacherEmail').value = '';
+    document.getElementById('teacherPassword').value = '';
     statusEl.style.color = 'green';
-    statusEl.textContent = 'تمت الإضافة بنجاح';
+    statusEl.textContent = 'تم إنشاء حساب المدرس بنجاح';
   } catch (e) {
     statusEl.style.color = 'red';
     statusEl.textContent = 'خطأ: ' + e.message;
+    await secondaryApp.delete();
   }
 }
 
